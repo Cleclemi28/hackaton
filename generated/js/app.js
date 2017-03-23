@@ -57788,6 +57788,22 @@ angular.module('app')
     });
 
 angular.module('app')
+.service('camService', function($http) {
+    return {
+        getOne: function(query) {
+          var reqcam = {
+            method: 'GET',
+            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,1000?show=webcams:location,image",
+            headers: {
+              "X-Mashape-Key": "8Ahct2XzMlmsho4XldP5Imm35hlip1NAxqGjsnVdWzShVUq7Yg"
+            }
+          };
+            return $http(reqcam);
+        },
+    };
+});
+
+angular.module('app')
     .service('UserService', function($http) {
         return {
             getAll: function() {
@@ -57806,18 +57822,96 @@ angular.module('app')
     });
 
 angular.module('app')
-    .controller('MainController', function($scope) {
+    .controller('MainController', function($scope, camService) {
+
+
+      
 
     });
 
 angular.module('app')
-    .controller('NavbarController', function($scope, Auth, CurrentUser) {
-        $scope.isCollapsed = true;
-        $scope.auth = Auth;
-        $scope.user = CurrentUser.user();
+    .controller('NavbarController', function($scope, camService) {
+        // cam API
+        $scope.query = "";
+        $scope.goSearch = function() {
 
-        $scope.logout = function() {
-            Auth.logout();
+            camService.getOne($scope.query).then(function(response) {
+                $scope.cam = response.data;
+                //fonction tableaux long, lat
+                var lat = [];
+                for (var i = 0; i < 11; i++) {
+                    if (i === 0) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 1) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 2) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 3) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 4) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 5) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 6) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 7) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 8) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 9) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+												var latitude = lat;
+												console.log(latitude);
+                    }
+                }
+
+                var long = [];
+                for (var j = 0; j < 11; j++) {
+                    if (j === 0) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 1) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 2) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 3) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 4) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 5) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 6) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 7) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 8) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 9) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+												var longitude = long;
+												console.log(longitude);
+											}
+
+                }
+
+            });
         };
     });
 
@@ -57901,7 +57995,9 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    ""
+    "<div>\n" +
+    "    <p>chemin :{{}}</p>\n" +
+    "</div>\n"
   );
 
   $templateCache.put("anon/navbar.html",
@@ -57913,50 +58009,13 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "        <div id=\"navbar\">\n" +
     "            <form class=\"navbar-form navbar-left\">\n" +
     "                <div class=\"form-group\">\n" +
-    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Search\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Search\" ng-model=\"query\">\n" +
     "                </div>\n" +
-    "                <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n" +
+    "                <button type=\"submit\" class=\"btn btn-default\" ng-click=\"goSearch()\">Submit</button>\n" +
     "            </form>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</nav>\n"
-  );
-
-  $templateCache.put("user/dashboard.html",
-    "Dashboard de {{user.email}}\n"
-  );
-
-  $templateCache.put("user/navbar.html",
-    "<nav class=\"navbar navbar-default\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
-    "    <div class=\"container-fluid\">\n" +
-    "        <div class=\"navbar-header\">\n" +
-    "            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar\">\n" +
-    "        <span class=\"sr-only\">Toggle navigation</span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "      </button>\n" +
-    "            <a class=\"navbar-brand\" href=\"#\"></a>\n" +
-    "        </div>\n" +
-    "        <div class=\"collapse navbar-collapse\" id=\"navbar\">\n" +
-    "            <ul class=\"nav navbar-nav\">\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"user.dashboard\" ng-show=\"auth.isAuthenticated()\">Dashboard</a></li>\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"user.profile\" ng-show=\"auth.isAuthenticated()\">Profile</a></li>\n" +
-    "\n" +
-    "            </ul>\n" +
-    "            <ul class=\"nav navbar-nav navbar-right\">\n" +
-    "                <li>\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"anon.home\">Website</a></li>\n" +
-    "                    <li><a ng-click=\"logout()\" ng-show=\"auth.isAuthenticated()\" href='#'>Logout</a></li>\n" +
-    "                </li>\n" +
-    "            </ul>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</nav>\n"
-  );
-
-  $templateCache.put("user/profile.html",
-    "Profile de {{user.email}}\n"
   );
 
 }]);
