@@ -57869,6 +57869,8 @@ angular.module('app')
                     }
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
+												var latitude = lat;
+												console.log(latitude);
                     }
                 }
 
@@ -57903,10 +57905,10 @@ angular.module('app')
                     }
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
-												var longitude = [9];
+												var longitude = long;
 												console.log(longitude);
 											}
-													console.log(long);
+
                 }
 
             });
