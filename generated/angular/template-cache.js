@@ -1,7 +1,9 @@
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    ""
+    "<div>\n" +
+    "    <p>chemin :{{}}</p>\n" +
+    "</div>\n"
   );
 
   $templateCache.put("anon/navbar.html",

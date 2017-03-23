@@ -57793,7 +57793,7 @@ angular.module('app')
         getOne: function(query) {
           var reqcam = {
             method: 'GET',
-            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,100?show=webcams:location,image",
+            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,1000?show=webcams:location,image",
             headers: {
               "X-Mashape-Key": "8Ahct2XzMlmsho4XldP5Imm35hlip1NAxqGjsnVdWzShVUq7Yg"
             }
@@ -57837,9 +57837,79 @@ angular.module('app')
 
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
-                console.log($scope.cam);
-            });
+                //fonction tableaux long, lat
+                var lat = [];
+                for (var i = 0; i < 11; i++) {
+                    if (i === 0) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 1) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 2) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 3) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 4) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 5) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 6) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 7) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 8) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                    if (i === 9) {
+                        lat.push($scope.cam.result.webcams[i].location.latitude);
+                    }
+                }
 
+                var long = [];
+                for (var j = 0; j < 11; j++) {
+                    if (j === 0) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 1) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 2) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 3) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 4) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 5) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 6) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 7) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 8) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+                    }
+                    if (j === 9) {
+                        long.push($scope.cam.result.webcams[j].location.longitude);
+												var longitude = [9];
+												console.log(longitude);
+											}
+													console.log(long);
+                }
+
+            });
         };
     });
 
@@ -57923,7 +57993,9 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    ""
+    "<div>\n" +
+    "    <p>chemin :{{}}</p>\n" +
+    "</div>\n"
   );
 
   $templateCache.put("anon/navbar.html",
