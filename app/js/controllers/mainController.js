@@ -1,4 +1,7 @@
 angular.module('app')
-    .controller('MainController', function($scope) {
+    .controller('MainController', function($scope, camService) {
+
+
+      
 
     });
