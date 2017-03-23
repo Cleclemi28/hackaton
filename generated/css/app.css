@@ -7342,6 +7342,11 @@ button.close {
   }
 }
 
+#googleMap {
+  width: 70%;
+  height: 90vh;
+  margin: 0 auto;
+}
 
 
 /*# sourceMappingURL=app.css.map */

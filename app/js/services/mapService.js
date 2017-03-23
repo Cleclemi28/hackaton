@@ -1,11 +1,12 @@
 angular.module('app')
     .service('mapService', function($http) {
       return {
-            getAll: function() {
-                return $http.get('http://www.omdbapi.com/?');
+            getAll: function(query) {
+                return $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + query + '&key=AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o');
             },
-            // getOne: function(title) {
-            //     return $http.get('http://www.omdbapi.com/?t=' + title + '&tomatoes=true&plot=short');
-            // },
         };
     });
+
+
+
+// API KEY : AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o

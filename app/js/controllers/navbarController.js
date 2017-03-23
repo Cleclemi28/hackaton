@@ -1,10 +1,13 @@
 angular.module('app')
-    .controller('NavbarController', function($scope, Auth, CurrentUser) {
-        $scope.isCollapsed = true;
-        $scope.auth = Auth;
-        $scope.user = CurrentUser.user();
+    .controller('NavbarController', function($scope, mapService) {
 
-        $scope.logout = function() {
-            Auth.logout();
+        $scope.query = "";
+        $scope.goSearch = function() {
+
+            // GOOGLE MAP API
+            mapService.getAll($scope.query).then(function(response) {
+                $scope.map = response.data;
+                console.log($scope.map);
+            });
         };
     });

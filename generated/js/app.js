@@ -57788,6 +57788,19 @@ angular.module('app')
     });
 
 angular.module('app')
+    .service('mapService', function($http) {
+      return {
+            getAll: function(query) {
+                return $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + query + '&key=AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o');
+            },
+        };
+    });
+
+
+
+// API KEY : AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o
+
+angular.module('app')
     .service('UserService', function($http) {
         return {
             getAll: function() {
@@ -57806,18 +57819,21 @@ angular.module('app')
     });
 
 angular.module('app')
-    .controller('MainController', function($scope) {
+    .controller('MainController', function($scope, mapService) {
 
-    });
+      });
 
 angular.module('app')
-    .controller('NavbarController', function($scope, Auth, CurrentUser) {
-        $scope.isCollapsed = true;
-        $scope.auth = Auth;
-        $scope.user = CurrentUser.user();
+    .controller('NavbarController', function($scope, mapService) {
 
-        $scope.logout = function() {
-            Auth.logout();
+        $scope.query = "";
+        $scope.goSearch = function() {
+
+            // GOOGLE MAP API
+            mapService.getAll($scope.query).then(function(response) {
+                $scope.map = response.data;
+                console.log($scope.map);
+            });
         };
     });
 
@@ -57901,7 +57917,47 @@ angular.module('app')
 angular.module("app").run(["$templateCache", function($templateCache) {
 
   $templateCache.put("anon/home.html",
-    ""
+    "<div id=\"googleMap\"></div>\n" +
+    "\n" +
+    "<script>\n" +
+    "    function myMap() {\n" +
+    "        <!-- SHOW GOOGLE MAP IN HTML -->\n" +
+    "        var mapProp = {\n" +
+    "            center: new google.maps.LatLng(43.296482, 5.36978),\n" +
+    "            zoom: 2,\n" +
+    "            <!-- RETIRER pour apparence ordinaire de la carte -->\n" +
+    "            mapTypeId: google.maps.MapTypeId.HYBRID\n" +
+    "        };\n" +
+    "        var map = new google.maps.Map(document.getElementById(\"googleMap\"), mapProp);\n" +
+    "\n" +
+    "        <!-- VARIABLE FOR LAT and LONG -->\n" +
+    "        var myLatLng = {\n" +
+    "            lat: 43.296482,\n" +
+    "            lng: 5.36978\n" +
+    "        };\n" +
+    "\n" +
+    "        <!-- MARKER -->\n" +
+    "        var marker = new google.maps.Marker({\n" +
+    "            position: myLatLng\n" +
+    "        });\n" +
+    "        marker.setMap(map);\n" +
+    "\n" +
+    "        <!-- INFO WINDOW -->\n" +
+    "        google.maps.event.addListener(marker, 'click', function() {\n" +
+    "            var infowindow = new google.maps.InfoWindow({\n" +
+    "                content: \"<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>\"\n" +
+    "            });\n" +
+    "            infowindow.open(map, marker);\n" +
+    "        });\n" +
+    "    }\n" +
+    "</script>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o&callback=myMap\"></script>\n" +
+    "\n" +
+    "<!-- EXEMPLE lgt,lat :\n" +
+    "40.714224,-73.961452 -->\n"
   );
 
   $templateCache.put("anon/navbar.html",
@@ -57913,50 +57969,13 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "        <div id=\"navbar\">\n" +
     "            <form class=\"navbar-form navbar-left\">\n" +
     "                <div class=\"form-group\">\n" +
-    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Search\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Un endroit de rêve…\" ng-model=\"query\">\n" +
     "                </div>\n" +
-    "                <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n" +
+    "                <button type=\"submit\" class=\"btn btn-default\" ng-click=\"goSearch()\">Submit</button>\n" +
     "            </form>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</nav>\n"
-  );
-
-  $templateCache.put("user/dashboard.html",
-    "Dashboard de {{user.email}}\n"
-  );
-
-  $templateCache.put("user/navbar.html",
-    "<nav class=\"navbar navbar-default\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
-    "    <div class=\"container-fluid\">\n" +
-    "        <div class=\"navbar-header\">\n" +
-    "            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#navbar\">\n" +
-    "        <span class=\"sr-only\">Toggle navigation</span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "        <span class=\"icon-bar\"></span>\n" +
-    "      </button>\n" +
-    "            <a class=\"navbar-brand\" href=\"#\"></a>\n" +
-    "        </div>\n" +
-    "        <div class=\"collapse navbar-collapse\" id=\"navbar\">\n" +
-    "            <ul class=\"nav navbar-nav\">\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"user.dashboard\" ng-show=\"auth.isAuthenticated()\">Dashboard</a></li>\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"user.profile\" ng-show=\"auth.isAuthenticated()\">Profile</a></li>\n" +
-    "\n" +
-    "            </ul>\n" +
-    "            <ul class=\"nav navbar-nav navbar-right\">\n" +
-    "                <li>\n" +
-    "                <li ui-sref-active=\"active\"><a ui-sref=\"anon.home\">Website</a></li>\n" +
-    "                    <li><a ng-click=\"logout()\" ng-show=\"auth.isAuthenticated()\" href='#'>Logout</a></li>\n" +
-    "                </li>\n" +
-    "            </ul>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</nav>\n"
-  );
-
-  $templateCache.put("user/profile.html",
-    "Profile de {{user.email}}\n"
   );
 
 }]);
