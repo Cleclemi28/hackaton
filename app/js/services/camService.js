@@ -9,7 +9,7 @@ angular.module('app')
                         "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
                     }
                 };
-  
+  							console.log(reqcam);
                 return $http(reqcam);
 
             },
