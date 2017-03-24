@@ -57788,20 +57788,22 @@ angular.module('app')
     });
 
 angular.module('app')
-.service('camService', function($http) {
-    return {
-        getOne: function(query) {
-          var reqcam = {
-            method: 'GET',
-            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,1000?show=webcams:location,image",
-            headers: {
-              "X-Mashape-Key": "8Ahct2XzMlmsho4XldP5Imm35hlip1NAxqGjsnVdWzShVUq7Yg"
-            }
-          };
-            return $http(reqcam);
-        },
-    };
-});
+    .service('camService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-18.766947,46.869106999999985,1000?show=webcams:location,image",
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+                console.log(reqcam);
+                return $http(reqcam);
+
+            },
+        };
+    });
 
 angular.module('app')
     .service('UserService', function($http) {
@@ -57837,6 +57839,7 @@ angular.module('app')
 
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
+								console.log(response.data);
                 //fonction tableaux long, lat
                 var lat = [];
                 for (var i = 0; i < 11; i++) {
@@ -57869,8 +57872,8 @@ angular.module('app')
                     }
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
-												var latitude = lat;
-												console.log(latitude);
+                        var latitude = lat;
+                        // console.log(latitude);
                     }
                 }
 
@@ -57897,6 +57900,7 @@ angular.module('app')
                     if (j === 6) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
                     }
+
                     if (j === 7) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
                     }
@@ -57905,10 +57909,9 @@ angular.module('app')
                     }
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
-												var longitude = long;
-												console.log(longitude);
-											}
-
+                        var longitude = long;
+                      s
+                    }
                 }
 
             });
