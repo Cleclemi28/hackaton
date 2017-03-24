@@ -61238,20 +61238,22 @@ angular.module('app')
     });
 
 angular.module('app')
-.service('camService', function($http) {
-    return {
-        getOne: function(query) {
-          var reqcam = {
-            method: 'GET',
-            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,1000?show=webcams:location,image",
-            headers: {
-              "X-Mashape-Key": "8Ahct2XzMlmsho4XldP5Imm35hlip1NAxqGjsnVdWzShVUq7Yg"
-            }
-          };
-            return $http(reqcam);
-        },
-    };
-});
+    .service('camService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-18.766947,46.869106999999985,1000?show=webcams:location,image",
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+  
+                return $http(reqcam);
+
+            },
+        };
+    });
 
 angular.module('app')
     .service('mapService', function($http) {
@@ -61300,6 +61302,7 @@ angular.module('app')
 
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
+								console.log(response.data);
                 //fonction tableaux long, lat
                 var lat = [];
                 for (var i = 0; i < 11; i++) {
@@ -61333,7 +61336,7 @@ angular.module('app')
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
                         var latitude = lat;
-                        console.log(latitude);
+
                     }
                 }
 
@@ -61369,7 +61372,7 @@ angular.module('app')
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
                         var longitude = long;
-                        console.log(longitude);
+
                     }
 
                 }
@@ -61526,9 +61529,7 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "            <h1 class=\"text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
     "        </div>\n" +
     "        <div ng-controller=\"NavbarController\">\n" +
-    "            <div>\n" +
-    "                <p>chemin :{{}}</p>\n" +
-    "            </div>\n" +
+    "      \n" +
     "\n" +
     "            <h1 class=\"text-center\">Connectez-vous </h1>\n" +
     "            <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +

@@ -7,9 +7,7 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "            <h1 class=\"text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
     "        </div>\n" +
     "        <div ng-controller=\"NavbarController\">\n" +
-    "            <div>\n" +
-    "                <p>chemin :{{}}</p>\n" +
-    "            </div>\n" +
+    "      \n" +
     "\n" +
     "            <h1 class=\"text-center\">Connectez-vous </h1>\n" +
     "            <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +
