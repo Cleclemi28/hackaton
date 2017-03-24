@@ -1,68 +1,82 @@
-<div id="wrap">
-    <div class="container">
+    <div class="container-fluid">
         <div id="teaser" class="row">
-            <h1 class="text-center">"Un voyage de mille lieues a commencé par un pas"</h1>
+            <h1 class="teaser-slogan text-center">"Un voyage de mille lieues a commencé par un pas"</h1>
         </div>
-        <div ng-controller="NavbarController">
-            <h1 class="text-center">Connectez-vous </h1>
-            <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
-                <ng-map center="43.296482,5.36978" zoom="2">
+        <div id="explain" class="row">
+            <h1 class="explain-slogan text-center">Start your next travel from your laptop!</h1>
+            <h5 class="explain-slogan text-center">With TravelCam, find your next destination and visit your dream place!
+              Non dolor ad aliqua voluptate occaecat consequat mollit laboris qui tempor ut aliqua commodo laborum.
+            </h5>
+        </div>
+        <div id="case-carte" ng-controller="NavbarController">
+            <h1 class="text-center">Get connected!</h1>
+            <div id="carte">
+                <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
+                    <ng-map default-style="false" center="43.296482,5.36978" zoom="2">
 
-                    <!-- France -->
-                    <marker on-click="gotopage('paris')" position="48.707367,2.388909"></marker>
-                    <!-- Etats-Unis -->
-                    <marker position="40.734625,-74.161813"></marker>
-                    <!-- Japon -->
-                    <marker position="36.753361,137.858891"></marker>
-                    <!-- Australie -->
-                    <marker position="-33.89051,151.282468"></marker>
-                    <!-- Mouscou -->
-                    <marker position="50.448487,30.527261"></marker>
-                    <!-- Portugal -->
-                    <marker position="38.818411,0.0899551"></marker>
-                    <!-- Québec -->
-                    <marker position="45.423664,-75.697213"></marker>
-                    <!-- Brésil -->
-                    <marker position="-19.919284,-43.938281"></marker>
-                    <!-- Argentine -->
-                    <marker position="-36.599986,-61.747273"></marker>
-                    <!-- Groenland -->
-                    <marker position="72.711903,-39.375"></marker>
-                    <!-- Egypte -->
-                    <marker position="27.10853,33.830616"></marker>
-                    <!-- Afrique du sud -->
-                    <marker position="-34.009981,22.379837"></marker>
-                    <!-- Inde -->
-                    <marker position="12.23814,79.06323"></marker>
-                    <!-- Thaïlande -->
-                    <marker position="8.076619,98.301319"></marker>
-                    <!-- Canada -->
-                    <marker position="51.144787,-115.573769"></marker>
-                    <!-- Mexique -->
-                    <marker position="22.887385,-109.906712"></marker>
-                    <!-- Alaska -->
-                    <marker position="61.218619,-149.877151"></marker>
-                    <!-- Finlande -->
-                    <marker position="63.439804,10.408945"></marker>
-                    <!-- Suisse -->
-                    <marker position="47.260586,8.205056"></marker>
-                    <!-- Allemagne -->
-                    <marker position="51.226775,6.771526"></marker>
-                    <!-- Russie/Mongolie -->
-                    <marker position="52.280407,104.282591"></marker>
-                    <!-- Russie/Kazakstan -->
-                    <marker position="55.160486,61.40188"></marker>
-                    <!-- Iran -->
-                    <marker position="25.142177,55.188446"></marker>
-                    <!-- Colombie -->
-                    <marker position="1.207935,-77.261717"></marker>
-                    <!-- Madagascar -->
-                    <marker position="-21.282017,55.469971"></marker>
-                </ng-map>
+                        <!-- France -->
+                        <marker on-click="gotopage('paris')" position="48.707367,2.388909"></marker>
+                        <!-- Etats-Unis -->
+                        <marker position="40.734625,-74.161813"></marker>
+                        <!-- Japon -->
+                        <marker on-click="gotopage('tokyo')" position="36.753361,137.858891"></marker>
+                        <!-- Australie -->
+                        <marker position="-33.89051,151.282468"></marker>
+                        <!-- Mouscou -->
+                        <marker position="50.448487,30.527261"></marker>
+                        <!-- Portugal -->
+                        <marker position="38.818411,0.0899551"></marker>
+                        <!-- Québec -->
+                        <marker position="45.423664,-75.697213"></marker>
+                        <!-- Brésil -->
+                        <marker on-click="gotopage3('bresil')" position="-19.919284,-43.938281"></marker>
+                        <!-- Argentine -->
+                        <marker position="-36.599986,-61.747273"></marker>
+                        <!-- Groenland -->
+                        <marker on-click="gotopage2('groenland')" position="72.711903,-39.375"></marker>
+                        <!-- Egypte -->
+                        <marker position="27.10853,33.830616"></marker>
+                        <!-- Afrique du sud -->
+                        <marker position="-34.009981,22.379837"></marker>
+                        <!-- Inde -->
+                        <marker position="12.23814,79.06323"></marker>
+                        <!-- Thaïlande -->
+                        <marker position="8.076619,98.301319"></marker>
+                        <!-- Canada -->
+                        <marker position="51.144787,-115.573769"></marker>
+                        <!-- Mexique -->
+                        <marker position="22.887385,-109.906712"></marker>
+                        <!-- Alaska -->
+                        <marker position="61.218619,-149.877151"></marker>
+                        <!-- Finlande -->
+                        <marker position="63.439804,10.408945"></marker>
+                        <!-- Suisse -->
+                        <marker position="47.260586,8.205056"></marker>
+                        <!-- Allemagne -->
+                        <marker position="51.226775,6.771526"></marker>
+                        <!-- Russie/Mongolie -->
+                        <marker position="52.280407,104.282591"></marker>
+                        <!-- Russie/Kazakstan -->
+                        <marker position="55.160486,61.40188"></marker>
+                        <!-- Iran -->
+                        <marker position="25.142177,55.188446"></marker>
+                        <!-- Colombie -->
+                        <marker position="1.207935,-77.261717"></marker>
+                        <!-- Madagascar -->
+                        <marker position="-21.282017,55.469971"></marker>
+                    </ng-map>
+                </div>
             </div>
         </div>
+        <footer class="bas text-center">
+            <h3>Keep in touch!</h3>
+            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+            <i class="fa fa-instagram" aria-hidden="true"></i>
+            <i class="fa fa-youtube-square" aria-hidden="true"></i>
+        </footer>
     </div>
-</div>
+
 
 
 

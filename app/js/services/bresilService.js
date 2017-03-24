@@ -1,10 +1,10 @@
 angular.module('app')
-    .service('camService', function($http) {
+    .service('bresilService', function($http) {
         return {
             getOne: function(query) {
                 var reqcam = {
                     method: 'GET',
-                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.707367,2.388909,10?show=webcams:location,image,timelapse",
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-19.919284,-43.938281,10?show=webcams:location,image,timelapse",
                     // url: "https://webcamstravel.p.mashape.com/webcams/list/bbox=42.442020,23.334540,42.442020,23.334540?show=webcams:location,image",
 
                     headers: {

@@ -5,63 +5,185 @@ html, body {
 
 body {
     font-family: Helvetica, sans-serif;
+    color: white;
 }
 
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
+/* NAVBAR */
+.navbar {
+  margin: 0;
+}
+
+.navbar-brand {
+  font-family: monospace;
+  font-size: 1.8em;
+  color: white !important;
 }
 
 
+
+
+/* TEASER */
 #teaser {
   height: 100vh;
-  background: url(https://static.pexels.com/photos/297755/pexels-photo-297755.jpeg) no-repeat center center;
+  background: url("https://static.pexels.com/photos/346885/pexels-photo-346885.jpeg") no-repeat center center;
   background-size: cover;
 }
 
-/*#ng-map {
-  width: 70%;
-  height: 90vh;
-  margin: 0 auto;
+.teaser-slogan {
+  width: 90%;
+  margin: auto;
+  color: #F74906;
+  padding-bottom: 5em;
+  padding-top: 4.6em;
+  /*text-shadow: 0px 4px 9px rgba(150, 150, 150, 1);*/
+}
+
+#teaser h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+
+/* EXPLAIN */
+#explain {
+  height: 60vh;
+  /*background: url("http://more-sky.com/data/out/7/IMG_155810.jpg") no-repeat center center;
+  background-size: cover;*/
+  background-color: #4885ed;
+}
+
+#explain h5 {
+  font-size: 1.2em;
+  line-height: 1.4em;
+  width: 50%;
+}
+
+.explain-slogan {
+  width: 90%;
+  margin: auto;
+  color: white;
+  padding-top: 3.5em;
+  /*text-shadow: 0px 4px 9px rgba(150, 150, 150, 1);*/
+}
+
+
+
+
+
+
+/* CARTE */
+#case-carte {
+  height: 100vh;
+  background-color: #F74906;
+  background-size: cover;
+  margin: 0 -20px;
+  padding: 1em 0 4em 0;
+}
+
+#case-carte h1 {
+  padding-top: -10px;
+  padding-bottom: 0.4em;
+  font-size: 3.6em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/*#carte {
+  padding-top: 8em;
 }*/
 
+ng-map {
+  margin: 0 auto;
+  width: 900px;
+  height: 580px;
+}
+
+
+
+/* FOOTER */
+footer {
+  background-color: #4885ed;
+  color: white;
+  margin: 0 -20px;
+  padding: 1em 0 2em 0;
+}
+
+footer p {
+  font-size: 0.8em;
+}
+
+footer i {
+  font-size: 3em !important;
+  margin-top: 0.2em;
+}
+
+footer .fa-facebook-official, footer .fa-twitter-square, footer .fa-instagram {
+  margin-right: 0.4em;
+}
+
+
+/* VIDEO */
+#video-container iframe {
+  position: absolute;
+  margin: 16% 10% 0 10%;
+    top:0;
+    left:0;
+    width:80% !important;
+    height:80%;
+  }
+
+#names {
+  margin-top: 1em;
+  color: #F74906;
+  text-align: center;
+}
+
+#names h1 {
+  font-weight: 600;
+}
+
+#names h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 0.6em;
+}
+
 /*modal*/
-#fade { /*--Masque opaque noir de fond--*/
-	display: none; /*--masqué par défaut--*/
-	background: #000;
+/*#fade { /*--Masque opaque noir de fond--*/
+	/*display: none; /*--masqué par défaut--*/
+	/*background: #000;
 	position: fixed; left: 0; top: 0;
 	width: 100%; height: 100%;
 	opacity: .80;
 	z-index: 9999;
-}
-.popup_block{
-	display: none; /*--masqué par défaut--*/
-	background: #fff;
+}*/
+/*.popup_block{*/
+	/*display: none; /*--masqué par défaut--*/*/
+	/*background: #fff;
 	padding: 20px;
 	border: 20px solid #ddd;
 	float: left;
 	font-size: 1.2em;
 	position: fixed;
 	top: 50%; left: 50%;
-	z-index: 99999;
+	z-index: 99999;*/
 	/*--Les différentes définitions de Box Shadow en CSS3--*/
-	-webkit-box-shadow: 0px 0px 20px #000;
+	/*-webkit-box-shadow: 0px 0px 20px #000;
 	-moz-box-shadow: 0px 0px 20px #000;
-	box-shadow: 0px 0px 20px #000;
+	box-shadow: 0px 0px 20px #000;*/
 	/*--Coins arrondis en CSS3--*/
-	-webkit-border-radius: 10px;
+	/*-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-}
-img.btn_close {
+}*/
+/*img.btn_close {
 	float: right;
 	margin: -55px -55px 0 0;
-}
+}*/
 /*--Gérer la position fixed pour IE6--*/
-*html #fade {
+/**html #fade {
 position: absolute;
 }
 *html .popup_block {
 position: absolute;
-}
+}*/

@@ -31,12 +31,39 @@ angular.module('app')
                     }
                 }
             })
+            .state('anon.tokyo', {
+                url: '/tokyo',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/tokyo.html',
+                        controller: 'tokyoController'
+                    }
+                }
+            })
+            .state('anon.bresil', {
+                url: '/bresil',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/bresil.html',
+                        controller: 'bresilController'
+                    }
+                }
+            })
+            .state('anon.groenland', {
+                url: '/groenland',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/groenland.html',
+                        controller: 'groenlandController'
+                    }
+                }
+            })
             .state('anon.paris', {
                 url: '/paris',
                 views: {
                     'content@': {
                         templateUrl: 'anon/paris.html',
-                        // controller: 'RegisterController'
+                        controller: 'parisController'
                     }
                 }
             });

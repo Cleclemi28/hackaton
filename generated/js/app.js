@@ -61238,12 +61238,54 @@ angular.module('app')
     });
 
 angular.module('app')
+    .service('bresilService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-19.919284,-43.938281,10?show=webcams:location,image,timelapse",
+                    // url: "https://webcamstravel.p.mashape.com/webcams/list/bbox=42.442020,23.334540,42.442020,23.334540?show=webcams:location,image",
+
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+  							console.log(reqcam);
+                return $http(reqcam);
+
+            },
+        };
+    });
+
+angular.module('app')
     .service('camService', function($http) {
         return {
             getOne: function(query) {
                 var reqcam = {
                     method: 'GET',
-                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-18.766947,46.869106999999985,1000?show=webcams:location,image",
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.707367,2.388909,10?show=webcams:location,image,timelapse",
+                    // url: "https://webcamstravel.p.mashape.com/webcams/list/bbox=42.442020,23.334540,42.442020,23.334540?show=webcams:location,image",
+
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+  							console.log(reqcam);
+                return $http(reqcam);
+
+            },
+        };
+    });
+
+angular.module('app')
+    .service('groenlandService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=72.711903,-39.375,10?show=webcams:location,image,timelapse",
+                    // url: "https://webcamstravel.p.mashape.com/webcams/list/bbox=42.442020,23.334540,42.442020,23.334540?show=webcams:location,image",
+
                     headers: {
                         "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
                     }
@@ -61269,6 +61311,26 @@ angular.module('app')
 // API KEY : AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o
 
 angular.module('app')
+    .service('tokyoService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=36.753361,137.858891,10000?show=webcams:location,image,timelapse",
+                    // url: "https://webcamstravel.p.mashape.com/webcams/list/bbox=42.442020,23.334540,42.442020,23.334540?show=webcams:location,image",
+
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+  							console.log(reqcam);
+                return $http(reqcam);
+
+            },
+        };
+    });
+
+angular.module('app')
     .service('UserService', function($http) {
         return {
             getAll: function() {
@@ -61287,6 +61349,32 @@ angular.module('app')
     });
 
 angular.module('app')
+    .controller('bresilController', function($scope, bresilService, mapService, $location) {
+
+
+
+                bresilService.getOne($scope.getBresil).then(function(response) {
+                        $scope.cam = response.data;
+                        console.log($scope.cam.result);
+
+                    });
+
+});
+
+angular.module('app')
+    .controller('groenlandController', function($scope, groenlandService, mapService, $location) {
+
+
+
+                groenlandService.getOne($scope.getGroenland).then(function(response) {
+                        $scope.cam = response.data;
+                        console.log($scope.cam.result);
+
+                    });
+
+});
+
+angular.module('app')
     .controller('MainController', function($scope, camService, mapService) {
 
 
@@ -61295,10 +61383,21 @@ angular.module('app')
     });
 
 angular.module('app')
-    .controller('NavbarController', function($scope, camService, mapService, $location) {
+    .controller('NavbarController', function($scope, camService, groenlandService, bresilService, tokyoService, mapService, $location) {
 			$scope.gotopage = function(ville) {
-				console.log(ville);
 				$location.path("paris");
+			};
+
+      $scope.gotopage2 = function(ville) {
+				$location.path("groenland");
+			};
+
+      $scope.gotopage3 = function(ville) {
+				$location.path("bresil");
+			};
+
+      $scope.gotopage4 = function(ville) {
+				$location.path("tokyo");
 			};
 
 
@@ -61306,82 +61405,89 @@ angular.module('app')
         $scope.query = "";
         $scope.goSearch = function() {
 
+
+            tokyoService.getOne($scope.getTokyo).then(function(response) {
+                    $scope.cam = response.data;
+                    console.log($scope.cam.result);
+
+                });
+
+
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
-								console.log(response.data);
                 //fonction tableaux long, lat
-                var lat = [];
-                for (var i = 0; i < 11; i++) {
-                    if (i === 0) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 1) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 2) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 3) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 4) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 5) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 6) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 7) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 8) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                    }
-                    if (i === 9) {
-                        lat.push($scope.cam.result.webcams[i].location.latitude);
-                        var latitude = lat;
-
-                    }
-                }
-
-                var long = [];
-                for (var j = 0; j < 11; j++) {
-                    if (j === 0) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 1) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 2) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 3) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 4) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 5) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 6) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 7) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 8) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                    }
-                    if (j === 9) {
-                        long.push($scope.cam.result.webcams[j].location.longitude);
-                        var longitude = long;
-
-                    }
-
-                }
+                // var lat = [];
+                // for (var i = 0; i < 11; i++) {
+                //     if (i === 0) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 1) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 2) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 3) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 4) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 5) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 6) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 7) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 8) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //     }
+                //     if (i === 9) {
+                //         lat.push($scope.cam.result.webcams[i].location.latitude);
+                //         var latitude = lat;
+                //
+                //     }
+                // }
+                //
+                // var long = [];
+                // for (var j = 0; j < 11; j++) {
+                //     if (j === 0) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 1) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 2) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 3) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 4) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 5) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 6) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 7) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 8) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //     }
+                //     if (j === 9) {
+                //         long.push($scope.cam.result.webcams[j].location.longitude);
+                //         var longitude = long;
+                //
+                //     }
+                //
+                // }
 
             });
 
@@ -61401,8 +61507,6 @@ angular.module('app')
 
             mapService.getAll($scope.query).then(function(response) {
                 $scope.map = response.data;
-                console.log($scope.map);
-
 
                     // google.maps.event.addListener(marker, 'click', function() {
                     //     var infowindow = new google.maps.InfoWindow({
@@ -61450,6 +61554,34 @@ angular.module('app')
     });
 
 angular.module('app')
+    .controller('parisController', function($scope, camService, mapService, $location) {
+
+
+
+                camService.getOne($scope.getParis).then(function(response) {
+                        $scope.cam = response.data;
+                        console.log($scope.cam.result);
+
+                    });
+
+});
+
+angular.module('app')
+    .controller('tokyoController', function($scope, tokyoService, mapService, $location) {
+
+      $scope.go = function ( path ) {
+$location.path( path );
+};
+
+                tokyoService.getOne($scope.getTokyo).then(function(response) {
+                        $scope.cam = response.data;
+                        console.log($scope.cam.result);
+
+                    });
+
+});
+
+angular.module('app')
     .config(function($stateProvider, $urlRouterProvider, AccessLevels) {
         $stateProvider
             .state('anon', {
@@ -61482,12 +61614,39 @@ angular.module('app')
                     }
                 }
             })
+            .state('anon.tokyo', {
+                url: '/tokyo',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/tokyo.html',
+                        controller: 'tokyoController'
+                    }
+                }
+            })
+            .state('anon.bresil', {
+                url: '/bresil',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/bresil.html',
+                        controller: 'bresilController'
+                    }
+                }
+            })
+            .state('anon.groenland', {
+                url: '/groenland',
+                views: {
+                    'content@': {
+                        templateUrl: 'anon/groenland.html',
+                        controller: 'groenlandController'
+                    }
+                }
+            })
             .state('anon.paris', {
                 url: '/paris',
                 views: {
                     'content@': {
                         templateUrl: 'anon/paris.html',
-                        // controller: 'RegisterController'
+                        controller: 'parisController'
                     }
                 }
             });
@@ -61528,72 +61687,129 @@ angular.module('app')
 
 angular.module("app").run(["$templateCache", function($templateCache) {
 
-  $templateCache.put("anon/home.html",
-    "<div id=\"wrap\">\n" +
-    "    <div class=\"container\">\n" +
-    "        <div id=\"teaser\" class=\"row\">\n" +
-    "            <h1 class=\"text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
-    "        </div>\n" +
-    "        <div ng-controller=\"NavbarController\">\n" +
-    "            <h1 class=\"text-center\">Connectez-vous </h1>\n" +
-    "            <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +
-    "                <ng-map center=\"43.296482,5.36978\" zoom=\"2\">\n" +
-    "\n" +
-    "                    <!-- France -->\n" +
-    "                    <marker on-click=\"gotopage('paris')\" position=\"48.707367,2.388909\"></marker>\n" +
-    "                    <!-- Etats-Unis -->\n" +
-    "                    <marker position=\"40.734625,-74.161813\"></marker>\n" +
-    "                    <!-- Japon -->\n" +
-    "                    <marker position=\"36.753361,137.858891\"></marker>\n" +
-    "                    <!-- Australie -->\n" +
-    "                    <marker position=\"-33.89051,151.282468\"></marker>\n" +
-    "                    <!-- Mouscou -->\n" +
-    "                    <marker position=\"50.448487,30.527261\"></marker>\n" +
-    "                    <!-- Portugal -->\n" +
-    "                    <marker position=\"38.818411,0.0899551\"></marker>\n" +
-    "                    <!-- Québec -->\n" +
-    "                    <marker position=\"45.423664,-75.697213\"></marker>\n" +
-    "                    <!-- Brésil -->\n" +
-    "                    <marker position=\"-19.919284,-43.938281\"></marker>\n" +
-    "                    <!-- Argentine -->\n" +
-    "                    <marker position=\"-36.599986,-61.747273\"></marker>\n" +
-    "                    <!-- Groenland -->\n" +
-    "                    <marker position=\"72.711903,-39.375\"></marker>\n" +
-    "                    <!-- Egypte -->\n" +
-    "                    <marker position=\"27.10853,33.830616\"></marker>\n" +
-    "                    <!-- Afrique du sud -->\n" +
-    "                    <marker position=\"-34.009981,22.379837\"></marker>\n" +
-    "                    <!-- Inde -->\n" +
-    "                    <marker position=\"12.23814,79.06323\"></marker>\n" +
-    "                    <!-- Thaïlande -->\n" +
-    "                    <marker position=\"8.076619,98.301319\"></marker>\n" +
-    "                    <!-- Canada -->\n" +
-    "                    <marker position=\"51.144787,-115.573769\"></marker>\n" +
-    "                    <!-- Mexique -->\n" +
-    "                    <marker position=\"22.887385,-109.906712\"></marker>\n" +
-    "                    <!-- Alaska -->\n" +
-    "                    <marker position=\"61.218619,-149.877151\"></marker>\n" +
-    "                    <!-- Finlande -->\n" +
-    "                    <marker position=\"63.439804,10.408945\"></marker>\n" +
-    "                    <!-- Suisse -->\n" +
-    "                    <marker position=\"47.260586,8.205056\"></marker>\n" +
-    "                    <!-- Allemagne -->\n" +
-    "                    <marker position=\"51.226775,6.771526\"></marker>\n" +
-    "                    <!-- Russie/Mongolie -->\n" +
-    "                    <marker position=\"52.280407,104.282591\"></marker>\n" +
-    "                    <!-- Russie/Kazakstan -->\n" +
-    "                    <marker position=\"55.160486,61.40188\"></marker>\n" +
-    "                    <!-- Iran -->\n" +
-    "                    <marker position=\"25.142177,55.188446\"></marker>\n" +
-    "                    <!-- Colombie -->\n" +
-    "                    <marker position=\"1.207935,-77.261717\"></marker>\n" +
-    "                    <!-- Madagascar -->\n" +
-    "                    <marker position=\"-21.282017,55.469971\"></marker>\n" +
-    "                </ng-map>\n" +
-    "            </div>\n" +
+  $templateCache.put("anon/bresil.html",
+    "<div id=\"video\" class=\"container\">\n" +
+    "  <div id=\"names\" class=\"animated slideInUp row\">\n" +
+    "        <h1>Belo Horizonte</h1>\n" +
+    "        <h2>South America</h2>\n" +
+    "        <h2>Brazil</h2>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "        <div id=\"video-container\" class=\"row\" ng-model=\"getBresil\">\n" +
+    "            <iframe class=\"text-center\" src=\"https://api.lookr.com/embed/timelapse/1237082269/day\"></iframe>\n" +
+    "            <!-- <img src=\"{{cam.result.webcams[0].image.current.preview}}\"/> -->\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "</div>\n" +
+    "</div>\n"
+  );
+
+  $templateCache.put("anon/footer.html",
+    "<div class=\"footer\">\n" +
+    "<footer class=\"bas text-center\">\n" +
+    "    <h3>Keep in touch!</h3>\n" +
+    "    <i class=\"fa fa-facebook-official\" aria-hidden=\"true\"></i>\n" +
+    "    <i class=\"fa fa-twitter-square\" aria-hidden=\"true\"></i>\n" +
+    "    <i class=\"fa fa-instagram\" aria-hidden=\"true\"></i>\n" +
+    "    <i class=\"fa fa-youtube-square\" aria-hidden=\"true\"></i>\n" +
+    "</footer>\n" +
+    "</div>\n"
+  );
+
+  $templateCache.put("anon/groenland.html",
+    "<div id=\"video\" class=\"container\">\n" +
+    "  <div id=\"names\" class=\"animated slideInUp row\">\n" +
+    "        <h1>Greenland</h1>\n" +
+    "        <h2>North America</h2>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "        <div id=\"video-container\" class=\"row\" ng-model=\"getGroenland\">\n" +
+    "            <iframe class=\"text-center\" src=\"https://api.lookr.com/embed/timelapse/1216629503/day\"></iframe>\n" +
+    "            <!-- <img src=\"{{cam.result.webcams[0].image.current.preview}}\"/> -->\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+  $templateCache.put("anon/home.html",
+    "    <div class=\"container-fluid\">\n" +
+    "        <div id=\"teaser\" class=\"row\">\n" +
+    "            <h1 class=\"teaser-slogan text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
+    "        </div>\n" +
+    "        <div id=\"explain\" class=\"row\">\n" +
+    "            <h1 class=\"explain-slogan text-center\">Start your next travel from your laptop!</h1>\n" +
+    "            <h5 class=\"explain-slogan text-center\">With TravelCam, find your next destination and visit your dream place!\n" +
+    "              Non dolor ad aliqua voluptate occaecat consequat mollit laboris qui tempor ut aliqua commodo laborum.\n" +
+    "            </h5>\n" +
+    "        </div>\n" +
+    "        <div id=\"case-carte\" ng-controller=\"NavbarController\">\n" +
+    "            <h1 class=\"text-center\">Get connected!</h1>\n" +
+    "            <div id=\"carte\">\n" +
+    "                <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +
+    "                    <ng-map default-style=\"false\" center=\"43.296482,5.36978\" zoom=\"2\">\n" +
+    "\n" +
+    "                        <!-- France -->\n" +
+    "                        <marker on-click=\"gotopage('paris')\" position=\"48.707367,2.388909\"></marker>\n" +
+    "                        <!-- Etats-Unis -->\n" +
+    "                        <marker position=\"40.734625,-74.161813\"></marker>\n" +
+    "                        <!-- Japon -->\n" +
+    "                        <marker on-click=\"gotopage('tokyo')\" position=\"36.753361,137.858891\"></marker>\n" +
+    "                        <!-- Australie -->\n" +
+    "                        <marker position=\"-33.89051,151.282468\"></marker>\n" +
+    "                        <!-- Mouscou -->\n" +
+    "                        <marker position=\"50.448487,30.527261\"></marker>\n" +
+    "                        <!-- Portugal -->\n" +
+    "                        <marker position=\"38.818411,0.0899551\"></marker>\n" +
+    "                        <!-- Québec -->\n" +
+    "                        <marker position=\"45.423664,-75.697213\"></marker>\n" +
+    "                        <!-- Brésil -->\n" +
+    "                        <marker on-click=\"gotopage3('bresil')\" position=\"-19.919284,-43.938281\"></marker>\n" +
+    "                        <!-- Argentine -->\n" +
+    "                        <marker position=\"-36.599986,-61.747273\"></marker>\n" +
+    "                        <!-- Groenland -->\n" +
+    "                        <marker on-click=\"gotopage2('groenland')\" position=\"72.711903,-39.375\"></marker>\n" +
+    "                        <!-- Egypte -->\n" +
+    "                        <marker position=\"27.10853,33.830616\"></marker>\n" +
+    "                        <!-- Afrique du sud -->\n" +
+    "                        <marker position=\"-34.009981,22.379837\"></marker>\n" +
+    "                        <!-- Inde -->\n" +
+    "                        <marker position=\"12.23814,79.06323\"></marker>\n" +
+    "                        <!-- Thaïlande -->\n" +
+    "                        <marker position=\"8.076619,98.301319\"></marker>\n" +
+    "                        <!-- Canada -->\n" +
+    "                        <marker position=\"51.144787,-115.573769\"></marker>\n" +
+    "                        <!-- Mexique -->\n" +
+    "                        <marker position=\"22.887385,-109.906712\"></marker>\n" +
+    "                        <!-- Alaska -->\n" +
+    "                        <marker position=\"61.218619,-149.877151\"></marker>\n" +
+    "                        <!-- Finlande -->\n" +
+    "                        <marker position=\"63.439804,10.408945\"></marker>\n" +
+    "                        <!-- Suisse -->\n" +
+    "                        <marker position=\"47.260586,8.205056\"></marker>\n" +
+    "                        <!-- Allemagne -->\n" +
+    "                        <marker position=\"51.226775,6.771526\"></marker>\n" +
+    "                        <!-- Russie/Mongolie -->\n" +
+    "                        <marker position=\"52.280407,104.282591\"></marker>\n" +
+    "                        <!-- Russie/Kazakstan -->\n" +
+    "                        <marker position=\"55.160486,61.40188\"></marker>\n" +
+    "                        <!-- Iran -->\n" +
+    "                        <marker position=\"25.142177,55.188446\"></marker>\n" +
+    "                        <!-- Colombie -->\n" +
+    "                        <marker position=\"1.207935,-77.261717\"></marker>\n" +
+    "                        <!-- Madagascar -->\n" +
+    "                        <marker position=\"-21.282017,55.469971\"></marker>\n" +
+    "                    </ng-map>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <footer class=\"bas text-center\">\n" +
+    "            <h3>Keep in touch!</h3>\n" +
+    "            <i class=\"fa fa-facebook-official\" aria-hidden=\"true\"></i>\n" +
+    "            <i class=\"fa fa-twitter-square\" aria-hidden=\"true\"></i>\n" +
+    "            <i class=\"fa fa-instagram\" aria-hidden=\"true\"></i>\n" +
+    "            <i class=\"fa fa-youtube-square\" aria-hidden=\"true\"></i>\n" +
+    "        </footer>\n" +
+    "    </div>\n" +
+    "\n" +
     "\n" +
     "\n" +
     "\n" +
@@ -61602,15 +61818,15 @@ angular.module("app").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("anon/navbar.html",
-    "<nav class=\"navbar navbar-default\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
+    "<nav class=\"navbar navbar-inverse navbar-custom\" role=\"navigation\" ng-controller=\"NavbarController\">\n" +
     "    <div class=\"container\">\n" +
     "        <div class=\"navbar-header\">\n" +
-    "            <a class=\"navbar-brand\" href=\"#\">Invitation au voyage</a>\n" +
+    "            <a class=\"navbar-brand\" href=\"#\">TravelCam</a>\n" +
     "        </div>\n" +
     "        <div id=\"navbar\">\n" +
-    "            <form class=\"navbar-form navbar-left\">\n" +
+    "            <form class=\"navbar-form navbar-right\">\n" +
     "                <div class=\"form-group\">\n" +
-    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Search\" ng-model=\"query\">\n" +
+    "                    <input type=\"text\" class=\"form-control\" placeholder=\"Your dream place…\" ng-model=\"getTokyo\">\n" +
     "                </div>\n" +
     "                <button type=\"submit\" class=\"btn btn-default\" ng-click=\"goSearch()\">Submit</button>\n" +
     "            </form>\n" +
@@ -61620,7 +61836,35 @@ angular.module("app").run(["$templateCache", function($templateCache) {
   );
 
   $templateCache.put("anon/paris.html",
-    "<h1>paris</h1>\n"
+    "<div id=\"video\" class=\"container\">\n" +
+    "  <div id=\"names\" class=\"animated slideInUp row\">\n" +
+    "    <h1>Paris</h1>\n" +
+    "    <h2>Europe, France</h2>\n" +
+    "    <h2>Île-de-France</h2>\n" +
+    "  </div>\n" +
+    "  <div class=\"row\">\n" +
+    "  <div id=\"video-container\" class=\"row\" ng-model=\"getParis\">\n" +
+    "    <iframe class=\"text-center\" src=\"https://api.lookr.com/embed/timelapse/1178148742/day\"></iframe>\n" +
+    "    <!-- <img src=\"{{cam.result.webcams[0].image.current.preview}}\"/> -->\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "</div>\n"
+  );
+
+  $templateCache.put("anon/tokyo.html",
+    "<div id=\"video\" class=\"container\">\n" +
+    "  <div id=\"names\" class=\"animated slideInUp row\">\n" +
+    "        <h1>千国</h1>\n" +
+    "        <h2>Asia, Japan</h2>\n" +
+    "        <h2>Nagano</h2>\n" +
+    "    </div>\n" +
+    "    <div class=\"row\">\n" +
+    "        <div id=\"video-container\" class=\"row\" ng-model=\"getTokyo\">\n" +
+    "            <iframe class=\"text-center\" src=\"https://api.lookr.com/embed/timelapse/1185236086/lifetime\"></iframe>\n" +
+    "            <!-- <img src=\"{{cam.result.webcams[0].image.current.preview}}\"/> -->\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
   );
 
 }]);
