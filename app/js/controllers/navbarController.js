@@ -1,6 +1,12 @@
 angular.module('app')
-    .controller('NavbarController', function($scope, camService, mapService) {
-        // cam API
+    .controller('NavbarController', function($scope, camService, mapService, $location) {
+			$scope.gotopage = function(ville) {
+				console.log(ville);
+				$location.path("paris");
+			};
+
+
+			  // cam API
         $scope.query = "";
         $scope.goSearch = function() {
 

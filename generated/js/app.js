@@ -61295,8 +61295,14 @@ angular.module('app')
     });
 
 angular.module('app')
-    .controller('NavbarController', function($scope, camService, mapService) {
-        // cam API
+    .controller('NavbarController', function($scope, camService, mapService, $location) {
+			$scope.gotopage = function(ville) {
+				console.log(ville);
+				$location.path("paris");
+			};
+
+
+			  // cam API
         $scope.query = "";
         $scope.goSearch = function() {
 
@@ -61476,12 +61482,12 @@ angular.module('app')
                     }
                 }
             })
-            .state('anon.register', {
-                url: '/register',
+            .state('anon.paris', {
+                url: '/paris',
                 views: {
                     'content@': {
-                        templateUrl: 'anon/register.html',
-                        controller: 'RegisterController'
+                        templateUrl: 'anon/paris.html',
+                        // controller: 'RegisterController'
                     }
                 }
             });
@@ -61529,13 +61535,12 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "            <h1 class=\"text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
     "        </div>\n" +
     "        <div ng-controller=\"NavbarController\">\n" +
-    "\n" +
-    "\n" +
     "            <h1 class=\"text-center\">Connectez-vous </h1>\n" +
     "            <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +
     "                <ng-map center=\"43.296482,5.36978\" zoom=\"2\">\n" +
+    "\n" +
     "                    <!-- France -->\n" +
-    "                  <marker position=\"48.707367,2.388909\"></marker> \n" +
+    "                    <marker on-click=\"gotopage('paris')\" position=\"48.707367,2.388909\"></marker>\n" +
     "                    <!-- Etats-Unis -->\n" +
     "                    <marker position=\"40.734625,-74.161813\"></marker>\n" +
     "                    <!-- Japon -->\n" +
@@ -61586,11 +61591,12 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "                    <marker position=\"-21.282017,55.469971\"></marker>\n" +
     "                </ng-map>\n" +
     "            </div>\n" +
-    "\n" +
     "        </div>\n" +
-    "\n" +
     "    </div>\n" +
     "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
     "<!-- EXEMPLE lgt,lat :\n" +
     "40.714224,-73.961452 -->\n"
   );

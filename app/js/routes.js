@@ -31,12 +31,12 @@ angular.module('app')
                     }
                 }
             })
-            .state('anon.register', {
-                url: '/register',
+            .state('anon.paris', {
+                url: '/paris',
                 views: {
                     'content@': {
-                        templateUrl: 'anon/register.html',
-                        controller: 'RegisterController'
+                        templateUrl: 'anon/paris.html',
+                        // controller: 'RegisterController'
                     }
                 }
             });
