@@ -7342,6 +7342,33 @@ button.close {
   }
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+
+#teaser {
+  height: 100vh;
+  background: url(https://static.pexels.com/photos/297755/pexels-photo-297755.jpeg) no-repeat center center;
+  background-size: cover;
+}
+
+/*#ng-map {
+  width: 70%;
+  height: 90vh;
+  margin: 0 auto;
+}*/
 
 
 /*# sourceMappingURL=app.css.map */

@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('NavbarController', function($scope, camService) {
+    .controller('NavbarController', function($scope, camService, mapService) {
         // cam API
         $scope.query = "";
         $scope.goSearch = function() {
@@ -38,8 +38,8 @@ angular.module('app')
                     }
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
-												var latitude = lat;
-												console.log(latitude);
+                        var latitude = lat;
+                        console.log(latitude);
                     }
                 }
 
@@ -74,12 +74,74 @@ angular.module('app')
                     }
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
-												var longitude = long;
-												console.log(longitude);
-											}
+                        var longitude = long;
+                        console.log(longitude);
+                    }
 
                 }
 
             });
+
+            // GOOGLE MAP API
+            $scope.googleMapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBghM65OXaB0ZDDKYf8LmCcrtTFouMvu8o";
+
+
+            // // <!-- INFO WINDOW -->
+            // $scope.info = function () {
+            //
+            //       var infowindow = new google.maps.InfoWindow({
+            //           content: "<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>"
+            //       });
+            //       infowindow.open(map, marker);
+            //
+            // };
+
+            mapService.getAll($scope.query).then(function(response) {
+                $scope.map = response.data;
+                console.log($scope.map);
+
+
+                    // google.maps.event.addListener(marker, 'click', function() {
+                    //     var infowindow = new google.maps.InfoWindow({
+                    //         content: "<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>"
+                    //     });
+                    //     infowindow.open(map, marker);
+                    // });
+
+
+                // function myMap() {
+                //     // <!-- SHOW GOOGLE MAP IN HTML -->
+                //     var mapProp = {
+                //         center: new google.maps.LatLng(43.296482, 5.36978),
+                //         zoom: 2,
+                //         // <!-- RETIRER pour apparence ordinaire de la carte -->
+                //         mapTypeId: google.maps.MapTypeId.HYBRID
+                //     };
+                //     var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+                //
+                //     // <!-- VARIABLE FOR LAT and LONG -->
+                //     var myLatLng = {
+                //         lat: 43.296482,
+                //         lng: 5.36978
+                //     };
+                //
+                //     // <!-- MARKER -->
+                //     var marker = new google.maps.Marker({
+                //         position: myLatLng
+                //     });
+                //     marker.setMap(map);
+                //
+                //     // <!-- INFO WINDOW -->
+                //     google.maps.event.addListener(marker, 'click', function() {
+                //         var infowindow = new google.maps.InfoWindow({
+                //             content: "<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>"
+                //         });
+                //         infowindow.open(map, marker);
+                //     });
+                // }
+                // console.log(longitude);
+
+            });
+
         };
     });
