@@ -4,15 +4,12 @@
             <h1 class="text-center">"Un voyage de mille lieues a commencé par un pas"</h1>
         </div>
         <div ng-controller="NavbarController">
-            <div>
-                <p>chemin :{{}}</p>
-            </div>
-
             <h1 class="text-center">Connectez-vous </h1>
             <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
                 <ng-map center="43.296482,5.36978" zoom="2">
+
                     <!-- France -->
-                    <marker title="<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>" position="48.707367,2.388909"></marker>
+                    <marker on-click="gotopage('paris')" position="48.707367,2.388909"></marker>
                     <!-- Etats-Unis -->
                     <marker position="40.734625,-74.161813"></marker>
                     <!-- Japon -->
@@ -63,10 +60,11 @@
                     <marker position="-21.282017,55.469971"></marker>
                 </ng-map>
             </div>
-
         </div>
-
     </div>
 </div>
+
+
+
 <!-- EXEMPLE lgt,lat :
 40.714224,-73.961452 -->

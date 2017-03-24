@@ -61238,20 +61238,22 @@ angular.module('app')
     });
 
 angular.module('app')
-.service('camService', function($http) {
-    return {
-        getOne: function(query) {
-          var reqcam = {
-            method: 'GET',
-            url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=48.866667,2.333333,1000?show=webcams:location,image",
-            headers: {
-              "X-Mashape-Key": "8Ahct2XzMlmsho4XldP5Imm35hlip1NAxqGjsnVdWzShVUq7Yg"
-            }
-          };
-            return $http(reqcam);
-        },
-    };
-});
+    .service('camService', function($http) {
+        return {
+            getOne: function(query) {
+                var reqcam = {
+                    method: 'GET',
+                    url: "https://webcamstravel.p.mashape.com/webcams/list/nearby=-18.766947,46.869106999999985,1000?show=webcams:location,image",
+                    headers: {
+                        "X-Mashape-Key": "QMTzl9XYWYmshKYAQlZxWIBfqtGUp1NbA6HjsnHWG1fxDvLnw9"
+                    }
+                };
+  							console.log(reqcam);
+                return $http(reqcam);
+
+            },
+        };
+    });
 
 angular.module('app')
     .service('mapService', function($http) {
@@ -61293,13 +61295,20 @@ angular.module('app')
     });
 
 angular.module('app')
-    .controller('NavbarController', function($scope, camService, mapService) {
-        // cam API
+    .controller('NavbarController', function($scope, camService, mapService, $location) {
+			$scope.gotopage = function(ville) {
+				console.log(ville);
+				$location.path("paris");
+			};
+
+
+			  // cam API
         $scope.query = "";
         $scope.goSearch = function() {
 
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
+								console.log(response.data);
                 //fonction tableaux long, lat
                 var lat = [];
                 for (var i = 0; i < 11; i++) {
@@ -61333,7 +61342,7 @@ angular.module('app')
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
                         var latitude = lat;
-                        console.log(latitude);
+
                     }
                 }
 
@@ -61369,7 +61378,7 @@ angular.module('app')
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
                         var longitude = long;
-                        console.log(longitude);
+
                     }
 
                 }
@@ -61473,12 +61482,12 @@ angular.module('app')
                     }
                 }
             })
-            .state('anon.register', {
-                url: '/register',
+            .state('anon.paris', {
+                url: '/paris',
                 views: {
                     'content@': {
-                        templateUrl: 'anon/register.html',
-                        controller: 'RegisterController'
+                        templateUrl: 'anon/paris.html',
+                        // controller: 'RegisterController'
                     }
                 }
             });
@@ -61526,15 +61535,12 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "            <h1 class=\"text-center\">\"Un voyage de mille lieues a commencé par un pas\"</h1>\n" +
     "        </div>\n" +
     "        <div ng-controller=\"NavbarController\">\n" +
-    "            <div>\n" +
-    "                <p>chemin :{{}}</p>\n" +
-    "            </div>\n" +
-    "\n" +
     "            <h1 class=\"text-center\">Connectez-vous </h1>\n" +
     "            <div map-lazy-load=\"https://maps.google.com/maps/api/js\" map-lazy-load-params=\"{{googleMapsUrl}}\">\n" +
     "                <ng-map center=\"43.296482,5.36978\" zoom=\"2\">\n" +
+    "\n" +
     "                    <!-- France -->\n" +
-    "                    <marker title=\"<h2>Continent, Pays</h2><h1>Nom de la Webcam</h1><img src='aperçu de la webcam'><a href=''>Contacter</a>\" position=\"48.707367,2.388909\"></marker>\n" +
+    "                    <marker on-click=\"gotopage('paris')\" position=\"48.707367,2.388909\"></marker>\n" +
     "                    <!-- Etats-Unis -->\n" +
     "                    <marker position=\"40.734625,-74.161813\"></marker>\n" +
     "                    <!-- Japon -->\n" +
@@ -61585,11 +61591,12 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "                    <marker position=\"-21.282017,55.469971\"></marker>\n" +
     "                </ng-map>\n" +
     "            </div>\n" +
-    "\n" +
     "        </div>\n" +
-    "\n" +
     "    </div>\n" +
     "</div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
     "<!-- EXEMPLE lgt,lat :\n" +
     "40.714224,-73.961452 -->\n"
   );
@@ -61610,6 +61617,10 @@ angular.module("app").run(["$templateCache", function($templateCache) {
     "        </div>\n" +
     "    </div>\n" +
     "</nav>\n"
+  );
+
+  $templateCache.put("anon/paris.html",
+    "<h1>paris</h1>\n"
   );
 
 }]);

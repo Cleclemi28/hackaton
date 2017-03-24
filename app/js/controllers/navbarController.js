@@ -1,11 +1,18 @@
 angular.module('app')
-    .controller('NavbarController', function($scope, camService, mapService) {
-        // cam API
+    .controller('NavbarController', function($scope, camService, mapService, $location) {
+			$scope.gotopage = function(ville) {
+				console.log(ville);
+				$location.path("paris");
+			};
+
+
+			  // cam API
         $scope.query = "";
         $scope.goSearch = function() {
 
             camService.getOne($scope.query).then(function(response) {
                 $scope.cam = response.data;
+								console.log(response.data);
                 //fonction tableaux long, lat
                 var lat = [];
                 for (var i = 0; i < 11; i++) {
@@ -39,7 +46,7 @@ angular.module('app')
                     if (i === 9) {
                         lat.push($scope.cam.result.webcams[i].location.latitude);
                         var latitude = lat;
-                        console.log(latitude);
+
                     }
                 }
 
@@ -75,7 +82,7 @@ angular.module('app')
                     if (j === 9) {
                         long.push($scope.cam.result.webcams[j].location.longitude);
                         var longitude = long;
-                        console.log(longitude);
+
                     }
 
                 }
